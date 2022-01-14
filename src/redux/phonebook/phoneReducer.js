@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  addContactError,
-  addContactRequest,
-  addContactSuccess,
-  getContactsError,
-  getContactsRequest,
-  getContactsSuccess,
-} from "./phoneAction";
-import { removeContact } from "./phoneOperations";
+// import {
+//   addContactError,
+//   addContactRequest,
+//   addContactSuccess,
+//   // getContactsError,
+//   // getContactsRequest,
+//   // getContactsSuccess,
+// } from "./phoneAction";
+import { removeContact, getContacts, addContact } from "./phoneOperations";
 
 const contactSlice = createSlice({
   name: "contacts",
@@ -17,32 +17,32 @@ const contactSlice = createSlice({
     error: null,
   },
   extraReducers: {
-    [addContactError]: (state, { payload }) => ({
+    [addContact.rejected]: (state, { payload }) => ({
       ...state,
       error: payload,
       isLoading: false,
     }),
-    [addContactRequest]: (state) => ({
+    [addContact.pending]: (state) => ({
       ...state,
       error: null,
       isLoading: true,
     }),
-    [addContactSuccess]: (state, { payload }) => ({
+    [addContact.fulfilled]: (state, { payload }) => ({
       ...state,
       isLoading: false,
       items: [...state.items, payload],
     }),
-    [getContactsError]: (state, { payload }) => ({
+    [getContacts.rejected]: (state, { payload }) => ({
       ...state,
       error: payload,
       isLoading: false,
     }),
-    [getContactsRequest]: (state) => ({
+    [getContacts.pending]: (state) => ({
       ...state,
       error: null,
       isLoading: true,
     }),
-    [getContactsSuccess]: (state, { payload }) => {
+    [getContacts.fulfilled]: (state, { payload }) => {
       console.log("payload :>> ", payload);
       return {
         ...state,
